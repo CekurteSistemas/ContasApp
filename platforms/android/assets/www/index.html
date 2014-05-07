@@ -1,22 +1,4 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
     <head>
         <meta charset="utf-8" />
@@ -24,14 +6,14 @@
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.2.min.css" />
-        <title>Contas</title>
+        <title>Contas Mensais</title>
     </head>
     <body>
         <div data-role="page" id="home">
             <div data-role="header">
                 <h1>Contas Mensais</h1>
                 <a href="#sincronizar" class="ui-btn ui-icon-recycle ui-btn-icon-notext ui-corner-all">Sincronizar</a>
-              
+                <a href="#listar" class="ui-btn ui-icon-grid ui-btn-icon-notext ui-corner-all ui-btn-right">Listar</a>
             </div>
             <div role="main" class="ui-content">
                 <ul id="tipo_despesa" data-role="listview" data-inset="true" class="ui-alt-icon">
@@ -55,6 +37,37 @@
                 <label for="valor">Valor:</label>
                 <input type="text" name="valor" id="valor" value="" />
                 <button type="submit" id="salvar" data-icon="check" data-theme="a" data-form="ui-btn-up-a" class=" ui-btn ui-btn-a ui-icon-check ui-btn-icon-left ui-shadow ui-corner-all">Salvar</button>
+            </div>
+        </div>
+        <div data-role="page" id="listar">
+            <div data-role="header">
+                <a href="#home" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-back ui-btn-b">Voltar</a>
+                <h1>Contas Mensais</h1>
+            </div>
+            <div role="main" class="ui-content">
+                <ul data-role="listview" data-inset="true">
+                    <li data-role="list-divider">Friday, October 8, 2010 <span class="ui-li-count">2</span></li>
+                    <li>
+                        <a class="ui-icon-delete" href="#remover">
+                    <h2>Stephen Weber</h2>
+                    <p><strong>You've been invited to a meeting at Filament Group in Boston, MA</strong></p>
+                    <p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
+                        <p class="ui-li-aside"><strong>6:24</strong>PM</p>
+                    </a></li>
+                    <li><a href="#remover">
+                    <h2>jQuery Team</h2>
+                    <p><strong>Boston Conference Planning</strong></p>
+                    <p>In preparation for the upcoming conference in Boston, we need to start gathering a list of sponsors and speakers.</p>
+                        <p class="ui-li-aside"><strong>9:18</strong>AM</p>
+                    </a></li>
+                    <li data-role="list-divider">Thursday, October 7, 2010 <span class="ui-li-count">1</span></li>
+                    <li><a href="#remover">
+                    <h2>Avery Walker</h2>
+                    <p><strong>Re: Dinner Tonight</strong></p>
+                    <p>Sure, let's plan on meeting at Highland Kitchen at 8:00 tonight. Can't wait!</p>
+                        <p class="ui-li-aside"><strong>4:48</strong>PM</p>
+                    </a></li>
+                </ul>
             </div>
         </div>
         <div data-role="page" id="sincronizar">
