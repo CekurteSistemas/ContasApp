@@ -1,0 +1,12 @@
+._*
+.~lock.*
+.buildpath
+.DS_Store
+.idea
+nbproject
+.project
+.settings
+_reports
+.lock
+plataforms/android/local.properties
+plataforms/android/CordovaLib/local.properties

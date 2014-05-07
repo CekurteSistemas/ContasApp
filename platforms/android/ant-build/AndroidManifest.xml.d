@@ -1,2 +1,2 @@
-/Users/jpcercal/phonegap/contas/platforms/android/ant-build/AndroidManifest.xml : \
-/Users/jpcercal/phonegap/contas/platforms/android/AndroidManifest.xml \
+/home/jpcercal/PhoneGap/hello/platforms/android/ant-build/AndroidManifest.xml : \
+/home/jpcercal/PhoneGap/hello/platforms/android/AndroidManifest.xml \
