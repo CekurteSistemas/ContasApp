@@ -21,9 +21,13 @@
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/img \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/js \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/plugins/org.apache.cordova.device \
+/home/jpcercal/PhoneGap/hello/platforms/android/assets/www/plugins/org.apache.cordova.network-information \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/plugins/org.apache.cordova.dialogs \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/plugins/org.apache.cordova.device/www \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/plugins/org.apache.cordova.device/www/device.js \
+/home/jpcercal/PhoneGap/hello/platforms/android/assets/www/plugins/org.apache.cordova.network-information/www \
+/home/jpcercal/PhoneGap/hello/platforms/android/assets/www/plugins/org.apache.cordova.network-information/www/Connection.js \
+/home/jpcercal/PhoneGap/hello/platforms/android/assets/www/plugins/org.apache.cordova.network-information/www/network.js \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/plugins/org.apache.cordova.dialogs/www \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/plugins/org.apache.cordova.dialogs/www/android \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/plugins/org.apache.cordova.dialogs/www/notification.js \

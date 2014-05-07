@@ -56,6 +56,21 @@ var app = {
             return false;
         });
 
+        $('#iniciar_sincronizacao').on('click', function() {
+
+            var networkState = navigator.connection.type;
+
+            if (networkState === Connection.WIFI) {
+
+                alert('Sincronizando...');
+
+            } else {
+                alert('Você não está conectado a uma Rede Wifi!');
+            }
+
+            return false;
+        });
+
         $('#salvar').on('click', function() {
 
             var valor   = $('#valor').val();
