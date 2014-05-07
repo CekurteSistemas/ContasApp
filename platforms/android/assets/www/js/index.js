@@ -17,6 +17,10 @@
  * under the License.
  */
 var app = {
+
+    // Tipo de Despesa
+    tipoDespesa: null,
+
     // Application Constructor
     initialize: function() {
         this.bindEvents();
@@ -33,13 +37,34 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-        app.receivedEvent('deviceready');
-    },
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        jQuery('#contas #submit').on('click', function() {
-            alert('click');
-            return false;
+        
+        $('#tipo_despesa li a').on('click', function() {
+            $('#valor').val('');
+            app.tipoDespesa = $(this).text();
+        });
+
+        $("#valor").maskMoney({
+            'symbol': 'R$',
+            'decimal': ',',
+            'thousands': '.'
+        });
+
+        $('#salvar').on('click', function() {
+
+            var valor   = $('#valor').val();
+
+            navigator.notification.confirm(
+                'Você confirma a inclusão da despesa abaixo?'   + '\n' +
+                'Tipo da Despesa: ' + app.tipoDespesa           + '\n' +
+                'Valor: R$ '        + valor,
+                function(opcao) {
+                    if (opcao === 1) {
+                        navigator.notification.alert('Despesa incluída com sucesso!', function(){}, 'Confirmação', 'Fechar');
+                    } 
+                },
+                'Incluir Despesas',
+                'Confirmar,Cancelar'
+            );
         })
-    }
+    },
 };

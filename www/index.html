@@ -30,26 +30,31 @@
         <div data-role="page" id="home">
             <div data-role="header">
                 <h1>Contas Mensais</h1>
-                <a href="#sincronizar" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-gear ui-btn-b">Sincronizar</a>
+                <a href="#sincronizar" class="ui-btn ui-icon-recycle ui-btn-icon-notext ui-corner-all">Sincronizar</a>
+              
             </div>
             <div role="main" class="ui-content">
-                <ul data-role="listview" data-inset="true" class="ui-alt-icon">
-                    <li><a href="#valor">Comida</a></li>
-                    <li><a href="#valor">Mercado</a></li>
-                    <li><a href="#valor">Farmácia</a></li>
-                    <li><a href="#valor">Outros</a></li>
+                <ul id="tipo_despesa" data-role="listview" data-inset="true" class="ui-alt-icon">
+                    <li><a href="#confirmar">Comida</a></li>
+                    <li><a href="#confirmar">Combustível</a></li>
+                    <li><a href="#confirmar">Mercado</a></li>
+                    <li><a href="#confirmar">Farmácia</a></li>
+                    <li><a href="#confirmar">Transporte</a></li>
+                    <li><a href="#confirmar">Roupas e Calçados</a></li>
+                    <li><a href="#confirmar">Cuidados Pessoais</a></li>
+                    <li><a href="#confirmar">Outros</a></li>
                 </ul>
             </div>
         </div>
-        <div data-role="page" id="valor">
+        <div data-role="page" id="confirmar">
             <div data-role="header">
                 <a href="#home" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-back ui-btn-b">Voltar</a>
                 <h1>Contas Mensais</h1>
             </div>
             <div role="main" class="ui-content">
-                <label for="field_valor">Valor:</label>
-                <input type="text" name="valor" id="field_valor" value="" />
-                <button type="submit" data-icon="check" data-theme="a" data-form="ui-btn-up-a" class=" ui-btn ui-btn-a ui-icon-check ui-btn-icon-left ui-shadow ui-corner-all">Salvar</button>
+                <label for="valor">Valor:</label>
+                <input type="text" name="valor" id="valor" value="" />
+                <button type="submit" id="salvar" data-icon="check" data-theme="a" data-form="ui-btn-up-a" class=" ui-btn ui-btn-a ui-icon-check ui-btn-icon-left ui-shadow ui-corner-all">Salvar</button>
             </div>
         </div>
         <div data-role="page" id="sincronizar">
@@ -58,12 +63,13 @@
                 <h1>Contas Mensais</h1>
             </div>
             <div role="main" class="ui-content">
-                <button type="submit" data-icon="check" data-theme="a" data-form="ui-btn-up-a" class=" ui-btn ui-btn-a ui-icon-check ui-btn-icon-left ui-shadow ui-corner-all">Sincronizar Agora</button>
+                <button type="submit" data-icon="check" data-theme="a" data-form="ui-btn-up-a" class=" ui-btn ui-btn-a ui-icon-check ui-btn-icon-left ui-shadow ui-corner-all">Iniciar Sincronização</button>
             </div>
         </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
         <script type="text/javascript" src="js/jquery.mobile-1.4.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.maskMoney.min.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
             app.initialize();

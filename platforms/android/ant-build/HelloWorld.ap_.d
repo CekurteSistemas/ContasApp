@@ -13,12 +13,18 @@
 /home/jpcercal/PhoneGap/hello/platforms/android/ant-build/res/drawable-mdpi/icon.png \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/_where-is-www.txt \
+/home/jpcercal/PhoneGap/hello/platforms/android/assets/www/plugins \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/index.html \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/cordova_plugins.js \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/cordova.js \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/css \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/img \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/js \
+/home/jpcercal/PhoneGap/hello/platforms/android/assets/www/plugins/org.apache.cordova.dialogs \
+/home/jpcercal/PhoneGap/hello/platforms/android/assets/www/plugins/org.apache.cordova.dialogs/www \
+/home/jpcercal/PhoneGap/hello/platforms/android/assets/www/plugins/org.apache.cordova.dialogs/www/android \
+/home/jpcercal/PhoneGap/hello/platforms/android/assets/www/plugins/org.apache.cordova.dialogs/www/notification.js \
+/home/jpcercal/PhoneGap/hello/platforms/android/assets/www/plugins/org.apache.cordova.dialogs/www/android/notification.js \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/css/jquery.mobile-1.4.2.min.css \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/img/jquery-mobile \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/img/jquery-mobile/icons-png \
@@ -227,4 +233,5 @@
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/js/index.js \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/js/jquery-2.1.1.min.js \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/js/jquery.mobile-1.4.2.min.js \
+/home/jpcercal/PhoneGap/hello/platforms/android/assets/www/js/jquery.maskMoney.min.js \
 /home/jpcercal/PhoneGap/hello/platforms/android/ant-build/AndroidManifest.xml \
