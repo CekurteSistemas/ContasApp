@@ -37,7 +37,7 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-        
+
         $('#tipo_despesa li a').on('click', function() {
             $('#valor').val('');
             app.tipoDespesa = $(this).text();
@@ -47,6 +47,13 @@ var app = {
             'symbol': 'R$',
             'decimal': ',',
             'thousands': '.'
+        });
+
+        $(document).on('pagecontainerbeforeshow', function(event, ui) {
+
+            console.log(this);
+
+            return false;
         });
 
         $('#salvar').on('click', function() {
@@ -60,7 +67,7 @@ var app = {
                 function(opcao) {
                     if (opcao === 1) {
                         navigator.notification.alert('Despesa incluída com sucesso!', function(){}, 'Confirmação', 'Fechar');
-                    } 
+                    }
                 },
                 'Incluir Despesas',
                 'Confirmar,Cancelar'

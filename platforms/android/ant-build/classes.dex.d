@@ -24,4 +24,5 @@
 /home/jpcercal/PhoneGap/hello/platforms/android/ant-build/classes/org/apache/cordova/dialogs/Notification$5.class \
 /home/jpcercal/PhoneGap/hello/platforms/android/ant-build/classes/org/apache/cordova/dialogs/Notification$3$4.class \
 /home/jpcercal/PhoneGap/hello/platforms/android/ant-build/classes/org/apache/cordova/dialogs/Notification$2$2.class \
+/home/jpcercal/PhoneGap/hello/platforms/android/ant-build/classes/org/apache/cordova/device/Device.class \
 /home/jpcercal/PhoneGap/hello/platforms/android/ant-build/dexedLibs/classes-2885dd1d91ef5037c4519befea2167fe.jar \

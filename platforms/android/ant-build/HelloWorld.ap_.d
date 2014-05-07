@@ -20,7 +20,10 @@
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/css \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/img \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/js \
+/home/jpcercal/PhoneGap/hello/platforms/android/assets/www/plugins/org.apache.cordova.device \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/plugins/org.apache.cordova.dialogs \
+/home/jpcercal/PhoneGap/hello/platforms/android/assets/www/plugins/org.apache.cordova.device/www \
+/home/jpcercal/PhoneGap/hello/platforms/android/assets/www/plugins/org.apache.cordova.device/www/device.js \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/plugins/org.apache.cordova.dialogs/www \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/plugins/org.apache.cordova.dialogs/www/android \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/plugins/org.apache.cordova.dialogs/www/notification.js \
@@ -230,6 +233,7 @@
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/img/jquery-mobile/icons-svg/arrow-u-r-white.svg \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/img/jquery-mobile/icons-svg/phone-white.svg \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/img/jquery-mobile/icons-svg/carat-d-white.svg \
+/home/jpcercal/PhoneGap/hello/platforms/android/assets/www/js/jquery.mobile-1.4.2.min.map \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/js/index.js \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/js/jquery-2.1.1.min.js \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/js/jquery.mobile-1.4.2.min.js \
