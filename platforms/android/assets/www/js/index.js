@@ -39,7 +39,6 @@ var app = {
     onDeviceReady: function() {
 
         $('#tipo_despesa li a').on('click', function() {
-            $('#valor').val('');
             app.tipoDespesa = $(this).text();
         });
 
@@ -49,12 +48,24 @@ var app = {
             'thousands': '.'
         });
 
-        $(document).on('pagecontainerbeforeshow', function(event, ui) {
+        $(document).on('pagechange', function() {
 
-            console.log(this);
+            var idPageActive = $('.ui-page-active', 'body').attr('id');
+
+            if (idPageActive === 'confirmar') {
+                $('#valor').val('');
+                $('#salvar').addClass('ui-state-disabled');
+            }
 
             return false;
         });
+
+        $('#valor').on('keypress', function() {
+            var valor = $(this).val();
+            if (valor != '') {
+                $('#salvar').removeClass('ui-state-disabled');
+
+}        });
 
         $('#iniciar_sincronizacao').on('click', function() {
 
