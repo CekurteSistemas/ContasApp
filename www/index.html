@@ -12,91 +12,20 @@
         <div data-role="page" id="home">
             <div data-role="header">
                 <h1>Contas Mensais</h1>
-                <a href="#sincronizar" class="ui-btn ui-icon-recycle ui-btn-icon-notext ui-corner-all">Sincronizar</a>
-                <a href="#listar" class="ui-btn ui-icon-grid ui-btn-icon-notext ui-corner-all ui-btn-right">Listar</a>
+                <a href="sincronizar.html" class="ui-btn ui-icon-recycle ui-btn-icon-notext ui-corner-all">Sincronizar</a>
+                <a href="listar.html" class="ui-btn ui-icon-grid ui-btn-icon-notext ui-corner-all ui-btn-right">Listar</a>
             </div>
             <div role="main" class="ui-content">
-                <ul id="tipo_despesa" data-role="listview" data-inset="true" class="ui-alt-icon">
-                    <li><a href="#confirmar">Comida</a></li>
-                    <li><a href="#confirmar">Combustível</a></li>
-                    <li><a href="#confirmar">Mercado</a></li>
-                    <li><a href="#confirmar">Farmácia</a></li>
-                    <li><a href="#confirmar">Transporte</a></li>
-                    <li><a href="#confirmar">Roupas e Calçados</a></li>
-                    <li><a href="#confirmar">Cuidados Pessoais</a></li>
-                    <li><a href="#confirmar">Outros</a></li>
+                <ul data-role="listview" data-inset="true" class="ui-alt-icon">
+                    <li><a data-value="tipo-despesa" href="forma-pagamento.html">Comida</a></li>
+                    <li><a data-value="tipo-despesa" href="forma-pagamento.html">Combustível</a></li>
+                    <li><a data-value="tipo-despesa" href="forma-pagamento.html">Mercado</a></li>
+                    <li><a data-value="tipo-despesa" href="forma-pagamento.html">Farmácia</a></li>
+                    <li><a data-value="tipo-despesa" href="forma-pagamento.html">Transporte</a></li>
+                    <li><a data-value="tipo-despesa" href="forma-pagamento.html">Roupas e Calçados</a></li>
+                    <li><a data-value="tipo-despesa" href="forma-pagamento.html">Cuidados Pessoais</a></li>
+                    <li><a data-value="tipo-despesa" href="forma-pagamento.html">Outros</a></li>
                 </ul>
-            </div>
-        </div>
-        <div data-role="page" data-title="Confirmar" id="confirmar">
-            <div data-role="header">
-                <a href="#home" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-back ui-btn-b">Voltar</a>
-                <h1>Contas Mensais</h1>
-            </div>
-            <div role="main" class="ui-content">
-                <label for="valor">Valor:</label>
-                <input type="text" name="valor" id="valor" value="" />
-                <button id="salvar" data-icon="check" data-theme="a" data-form="ui-btn-up-a" class=" ui-btn ui-btn-a ui-icon-check ui-btn-icon-left ui-shadow ui-corner-all">Salvar</button>
-            </div>
-        </div>
-        <div data-role="page" id="listar">
-            <div data-role="header">
-                <a href="#home" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-back ui-btn-b">Voltar</a>
-                <h1>Contas Mensais</h1>
-            </div>
-            <div role="main" class="ui-content">
-                <ul data-role="listview" data-inset="true">
-                    <li data-role="list-divider">Segunda Feira, 08 de Outubro<span class="ui-li-count">2</span></li>
-                    <li>
-                        <a class="ui-icon-delete" href="#remover">
-                            <h2>Comida</h2>
-                            <p>
-                                <strong>R$ 5,00</strong>
-                            </p>
-                            <p>Pagamento em dinheiro.</p>
-                            <p class="ui-li-aside"><strong>08:20</strong></p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="ui-icon-delete" href="#remover">
-                            <h2>Outros</h2>
-                            <p>
-                                <strong>R$ 60,00</strong>
-                            </p>
-                            <p>Pagamento em dinheiro.</p>
-                            <p class="ui-li-aside"><strong>08:20</strong></p>
-                        </a>
-                    </li>
-                    <li data-role="list-divider">Thursday, October 7, 2010 <span class="ui-li-count">1</span></li>
-                    <li>
-                        <a class="ui-icon-delete" href="#remover">
-                            <h2>Outros</h2>
-                            <p>
-                                <strong>R$ 60,00</strong>
-                            </p>
-                            <p>Pagamento em dinheiro.</p>
-                            <p class="ui-li-aside"><strong>08:20</strong></p>
-                        </a>
-
-                        <a class="ui-icon-delete" href="#remover">
-                            <h2>Stephen Weber</h2>
-                            <p>
-                                <strong>You've been invited to a meeting at Filament Group in Boston, MA</strong>
-                            </p>
-                            <p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
-                            <p class="ui-li-aside"><strong>6:24</strong>PM</p>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div data-role="page" id="sincronizar">
-            <div data-role="header">
-                <a href="#home" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-back ui-btn-b">Voltar</a>
-                <h1>Contas Mensais</h1>
-            </div>
-            <div role="main" class="ui-content">
-                <button id="iniciar_sincronizacao" data-icon="check" data-theme="a" data-form="ui-btn-up-a" class=" ui-btn ui-btn-a ui-icon-check ui-btn-icon-left ui-shadow ui-corner-all">Iniciar Sincronização</button>
             </div>
         </div>
         <script type="text/javascript" src="cordova.js"></script>

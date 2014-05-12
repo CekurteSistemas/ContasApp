@@ -18,8 +18,16 @@
  */
 var app = {
 
-    // Tipo de Despesa
-    tipoDespesa: null,
+    value: {
+        'tipo-despesa'      : null,
+        'forma-pagamento'   : null,
+        'conta'             : null,
+        'valor'             : null
+    },
+
+    getValue: function(key) {
+        return app.value[key];
+    },
 
     // Application Constructor
     initialize: function() {
@@ -38,36 +46,62 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
 
-        $('#tipo_despesa li a').on('click', function() {
-            app.tipoDespesa = $(this).text();
-        });
-
-        $("#valor").maskMoney({
-            'symbol': 'R$',
-            'decimal': ',',
-            'thousands': '.'
-        });
+        // -----------------------------------------------------------------
+        // Evento disparado ao selecionar uma página
 
         $(document).on('pagechange', function() {
 
             var idPageActive = $('.ui-page-active', 'body').attr('id');
 
-            if (idPageActive === 'confirmar') {
-                $('#valor').val('');
-                $('#salvar').addClass('ui-state-disabled');
+            if (idPageActive === 'resumo') {
+
+                for (var key in app.value) {
+                    alert(app.value[key]);
+                }
+
+                $('#resumo .tipo-despesa').val(app.value['tipo-despesa']);
+
+                $('#resumo .valor').val(app.value['valor']);
+
+                $('#resumo .forma-pagamento').val(app.value['forma-pagamento']);
+
+                $('#resumo .conta').val(app.value['conta']);
+
+            } else if (idPageActive === 'despesa') {
+
+                $(document).find('#despesa .valor').maskMoney({
+                    'symbol'    : 'R$',
+                    'decimal'   : ',',
+                    'thousands' : '.'
+                });
             }
 
             return false;
         });
 
-        $('#valor').on('keypress', function() {
-            var valor = $(this).val();
-            if (valor != '') {
-                $('#salvar').removeClass('ui-state-disabled');
+        // -----------------------------------------------------------------
+        // Atualiza o objeto que armazena os valores informados pelo usuário
 
-}        });
+        $(document).on('click', '.ui-content ul[data-role="listview"] li a', function() {
 
-        $('#iniciar_sincronizacao').on('click', function() {
+            var value = $(this).data('value');
+
+            alert(value);
+            alert($(this).text());
+
+            if (value) {
+                app.value[$(this).data('value')] = $(this).text();
+            }
+        });
+
+        $(document).on('click', '#despesa #avancar', function() {
+            app.value['valor'] = $('#despesa .valor').val();
+        });
+
+        // -----------------------------------------------------------------
+        // Manipula o botão sincronizar
+
+        $(document).on('click', '#sincronizar .sincronizar', function() {
 
             var networkState = navigator.connection.type;
 
@@ -82,22 +116,25 @@ var app = {
             return false;
         });
 
-        $('#salvar').on('click', function() {
+        // -----------------------------------------------------------------
+        // Manipula o botão salvar da página de resumo
 
-            var valor   = $('#valor').val();
+        $(document).on('click', '#resumo .confirmar', function() {
 
-            navigator.notification.confirm(
-                'Você confirma a inclusão da despesa abaixo?'   + '\n' +
-                'Tipo da Despesa: ' + app.tipoDespesa           + '\n' +
-                'Valor: R$ '        + valor,
-                function(opcao) {
-                    if (opcao === 1) {
-                        navigator.notification.alert('Despesa incluída com sucesso!', function(){}, 'Confirmação', 'Fechar');
-                    }
-                },
-                'Incluir Despesas',
-                'Confirmar,Cancelar'
-            );
+            alert('confirmar');
+
+            // navigator.notification.confirm(
+            //     'Você confirma a inclusão da despesa abaixo?'   + '\n' +
+            //     'Tipo da Despesa: ' + app.value['tipo-despesa'] + '\n' +
+            //     'Valor: R$ '        + valor,
+            //     function(opcao) {
+            //         if (opcao === 1) {
+            //             navigator.notification.alert('Despesa incluída com sucesso!', function(){}, 'Confirmação', 'Fechar');
+            //         }
+            //     },
+            //     'Incluir Despesas',
+            //     'Confirmar,Cancelar'
+            // );
         })
     },
 };
