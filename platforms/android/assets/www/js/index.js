@@ -18,6 +18,8 @@
  */
 var app = {
 
+    db: null,
+
     value: {
         'tipo-despesa'      : null,
         'forma-pagamento'   : null,
@@ -40,11 +42,56 @@ var app = {
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
+
+    createTable: function(tx) {
+        tx.executeSql('CREATE TABLE IF NOT EXISTS contas (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, tipo_despesa VARCHAR(255), forma_pagamento VARCHAR(255), conta VARCHAR(255), valor VARCHAR(255), data VARCHAR(255))');
+    },
+
+    inserirConta: function(tx) {
+
+        var date = new Date();
+
+        var dateTime = moment.utc(date).format('YYYY-MM-DD HH:mm:ss');
+
+        var sql = 'INSERT INTO contas (tipo_despesa, forma_pagamento, conta, valor, data) VALUES (';
+
+        sql += '"' + app.value['tipo-despesa']      + '", ';
+        sql += '"' + app.value['forma-pagamento']   + '", ';
+
+        if (app.value['conta'] != null) {
+            sql += '"' + app.value['conta']         + '", ';
+        } else {
+            sql += 'null, ';
+        }
+
+        sql += '"' + app.value['valor']             + '", ';
+        sql += '"' + dateTime                       + '"';
+
+        sql += ')';
+
+        tx.executeSql(sql);
+    },
+
+    successCB: function() {
+        alert("success!");
+    },
+
+    errorCB: function(error) {
+        alert("Error processing SQL [" + error.code + ']: ' + error.message);
+    },
+
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
+
+        // -----------------------------------------------------------------
+        // Cria a base de dados
+
+        app.db = window.openDatabase('contas', '1.0', 'Contas Mensais', 1000000);
+
+        app.db.transaction(app.createTable, app.errorCB, app.successCB);
 
         // -----------------------------------------------------------------
         // Evento disparado ao selecionar uma página
@@ -55,17 +102,15 @@ var app = {
 
             if (idPageActive === 'resumo') {
 
-                for (var key in app.value) {
-                    alert(app.value[key]);
-                }
-
                 $('#resumo .tipo-despesa').val(app.value['tipo-despesa']);
 
                 $('#resumo .valor').val(app.value['valor']);
 
                 $('#resumo .forma-pagamento').val(app.value['forma-pagamento']);
 
-                $('#resumo .conta').val(app.value['conta']);
+                if (app.value['conta'] != null) {
+                    $('#resumo .conta').val(app.value['conta']);
+                }
 
             } else if (idPageActive === 'despesa') {
 
@@ -74,6 +119,9 @@ var app = {
                     'decimal'   : ',',
                     'thousands' : '.'
                 });
+            } else if (idPageActive === 'listar') {
+
+
             }
 
             return false;
@@ -85,9 +133,6 @@ var app = {
         $(document).on('click', '.ui-content ul[data-role="listview"] li a', function() {
 
             var value = $(this).data('value');
-
-            alert(value);
-            alert($(this).text());
 
             if (value) {
                 app.value[$(this).data('value')] = $(this).text();
@@ -121,7 +166,14 @@ var app = {
 
         $(document).on('click', '#resumo .confirmar', function() {
 
-            alert('confirmar');
+            app.db.transaction(app.inserirConta, app.errorCB, function() {
+
+                alert('Despesa incluída com sucesso!');
+
+                $.mobile.changePage('index.html', {
+                    transition: "slide"
+                });
+            });
 
             // navigator.notification.confirm(
             //     'Você confirma a inclusão da despesa abaixo?'   + '\n' +

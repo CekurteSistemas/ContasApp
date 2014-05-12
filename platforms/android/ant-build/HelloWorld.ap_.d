@@ -245,6 +245,7 @@
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/img/jquery-mobile/icons-svg/carat-d-white.svg \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/js/jquery.mobile-1.4.2.min.map \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/js/index.js \
+/home/jpcercal/PhoneGap/hello/platforms/android/assets/www/js/moment.min.js \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/js/jquery-2.1.1.min.js \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/js/jquery.mobile-1.4.2.min.js \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/js/jquery.maskMoney.min.js \
