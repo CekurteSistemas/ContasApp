@@ -21,7 +21,7 @@ var app = {
 
     db: null,
 
-    debug: false,
+    debug: true,
 
     info: function(value) {
         if (app.debug === true) {
@@ -59,7 +59,8 @@ var app = {
     },
 
     createTable: function(tx) {
-        tx.executeSql('CREATE TABLE IF NOT EXISTS contas (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, tipo_despesa VARCHAR(255), forma_pagamento VARCHAR(255), conta VARCHAR(255), valor VARCHAR(255), data VARCHAR(255))');
+        // tx.executeSql('DROP TABLE IF EXISTS contas');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS contas (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, tipo_despesa VARCHAR(255), forma_pagamento VARCHAR(255), conta VARCHAR(255), valor VARCHAR(255), data VARCHAR(255), sincronizado BOOL)');
     },
 
     inserirConta: function(tx) {
@@ -68,7 +69,7 @@ var app = {
 
         var dateTime = moment.utc(date).format('YYYY-MM-DD HH:mm:ss');
 
-        var sql = 'INSERT INTO contas (tipo_despesa, forma_pagamento, conta, valor, data) VALUES (';
+        var sql = 'INSERT INTO contas (tipo_despesa, forma_pagamento, conta, valor, data, sincronizado) VALUES (';
 
         sql += '"' + app.value['tipo-despesa']      + '", ';
         sql += '"' + app.value['forma-pagamento']   + '", ';
@@ -80,11 +81,67 @@ var app = {
         }
 
         sql += '"' + app.value['valor']             + '", ';
-        sql += '"' + dateTime                       + '"';
+        sql += '"' + dateTime                       + '", ';
+        sql += '0';
 
         sql += ')';
 
         tx.executeSql(sql);
+    },
+
+    renderGrid: function(tx) {
+
+        tx.executeSql('SELECT * FROM contas ORDER BY data DESC', [], function(tx, results) {
+
+            app.log('Foram encontrados ' + results.rows.length + ' registro(s) na tabela contas.');
+
+            var listview = $(document).find('#listar ul.listar');
+
+            $(listview).empty();
+
+            for (var i = 0; i < results.rows.length; i++) {
+
+                var row = results.rows.item(i);
+
+                app.info(row);
+
+                var momentDate = moment(row.data, 'YYYY-MM-DD');
+
+                var liContainer = $('<li>').attr('data-role', 'list-divider').html(
+                    momentDate.format('dddd').charAt(0).toUpperCase() + momentDate.format('dddd').slice(1) + ', ' +
+                    momentDate.format('DD')     + ' de ' +
+                    momentDate.format('MMM')    + ' de ' +
+                    momentDate.format('YYYY')
+                )
+                // .append(
+                //     $('<span>').addClass('ui-li-count').text(result[i].total)
+                // )
+                ;
+
+                $(listview).append(liContainer);
+
+                var a = $('<a>')
+                    // .addClass('ui-icon-delete').attr('href', '#remover')
+                    .append($('<h2>').html(row['tipo_despesa']))
+                    .append($('<p>').append($('<strong>').html(row['valor'])))
+                    .append($('<p>').html(row['forma_pagamento']))
+                    .append($('<p>').html(
+                        (row['forma_pagamento'].toLowerCase() == 'dinheiro' || row['forma_pagamento'].toLowerCase() == 'vale alimentação')
+                            ? ''
+                            : 'Conta: ' + row.conta
+                    ))
+                    .append($('<p>').html('Sincronizado: ' + (row['sincronizado'] == 0 ? 'Não' : 'Sim')))
+                    .append($('<p>').addClass('ui-li-aside').append($('<strong>').html(
+                        moment(row.data, 'YYYY-MM-DD HH-mm-ss').format('HH:mm:ss')
+                    )))
+                ;
+
+                $(listview).append($('<li>').append(a));
+            }
+
+            $(document).find('#listar .listar').listview('refresh');
+
+        }, app.errorCB);
     },
 
     successCB: function() {
@@ -100,6 +157,8 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
+
+        moment.lang('pt-br');
 
         // -----------------------------------------------------------------
         // Cria a base de dados
@@ -118,83 +177,7 @@ var app = {
 
             if (ui.toPage[0].id == 'listar') {
 
-                var result = [
-                    {
-                        'date': '2014-05-12',
-                        'total': 2,
-                        'data': [
-                            {
-                                'tipo-despesa'      : 'Comida',
-                                'valor'             : '3,52',
-                                'forma-pagamento'   : 'Dinheiro',
-                                'conta'             : '',
-                                'hora'              : '10:30:15'
-                            },
-                            {
-                                'tipo-despesa'      : 'Combustível',
-                                'valor'             : '50,05',
-                                'forma-pagamento'   : 'Cartão Débito',
-                                'conta'             : 'Caixa Economica Federal',
-                                'hora'              : '10:45:30'
-                            }
-                        ]
-                    },
-                    {
-                        'date': '2014-05-11',
-                        'total': 1,
-                        'data': [
-                            {
-                                'tipo-despesa'      : 'Comida',
-                                'valor'             : '10,80',
-                                'forma-pagamento'   : 'Cartão Débito',
-                                'conta'             : 'Banco do Brasil',
-                                'hora'              : '20:10:50'
-                            }
-                        ]
-                    }
-                ];
-
-                var listview = $(document).find('#listar ul.listar');
-
-                $(listview).empty();
-
-                for (var i = 0; i < result.length; i++) {
-
-                    var row = result[i];
-
-                    var momentDate = moment(row.date, 'YYYY-MM-DD');
-
-                    var liContainer = $('<li>').attr('data-role', 'list-divider').html(
-                        momentDate.format('dddd')   + ', ' +
-                        momentDate.format('DD')     + ' de ' +
-                        momentDate.format('MMM')    + ' de ' +
-                        momentDate.format('YYYY')
-                    ).append(
-                        $('<span>').addClass('ui-li-count').text(result[i].total)
-                    );
-
-                    app.info(row);
-
-                    $(listview).append(liContainer);
-
-                    for (var j = 0; j < result[i].total; j++) {
-
-                        var data = result[i].data[j];
-
-                        app.info(data);
-
-                        var a = $('<a>').addClass('ui-icon-delete').attr('href', '#remover')
-                            .append($('<h2>').html(data['tipo-despesa']))
-                            .append($('<p>').append($('<strong>').html(data['valor'])))
-                            .append($('<p>').html(data['forma-pagamento']))
-                            .append($('<p>').addClass('ui-li-aside').append($('<strong>').html(data['hora'])))
-                        ;
-
-                        $(listview).append($('<li>').append(a));
-                    }
-                }
-
-                $(document).find('#listar .listar').listview('refresh');
+                app.db.transaction(app.renderGrid, app.errorCB, app.successCB);
             }
         });
 
