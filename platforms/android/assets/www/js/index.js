@@ -67,7 +67,9 @@ var app = {
 
         var date = new Date();
 
-        var dateTime = moment.utc(date).format('YYYY-MM-DD HH:mm:ss');
+        var dateTime = moment(date).format('YYYY-MM-DD HH:mm:ss');
+
+        app.info(dateTime);
 
         var sql = 'INSERT INTO contas (tipo_despesa, forma_pagamento, conta, valor, data, sincronizado) VALUES (';
 
