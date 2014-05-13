@@ -153,7 +153,7 @@ var app = {
                             $('<h2>').html(row['tipo-despesa'])
                         )
                         .append(
-                            $('<p>').append($('<strong>').html(row['valor']))
+                            'R$ ' + $('<p>').append($('<strong>').html(row['valor']))
                         )
                         .append(
                             $('<p>').html(row['forma-pagamento'])
