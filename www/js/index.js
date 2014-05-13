@@ -101,44 +101,78 @@ var app = {
 
             $(listview).empty();
 
+            var result = [];
+
             for (var i = 0; i < results.rows.length; i++) {
 
                 var row = results.rows.item(i);
 
-                app.info(row);
+                var momentDate = moment(row.data).format('YYYY-MM-DD');
 
-                var momentDate = moment(row.data, 'YYYY-MM-DD');
+                if (!result[momentDate]) {
+                    result[momentDate] = [];
+                }
+
+                result[momentDate].push({
+                    'tipo-despesa'      : row['tipo_despesa'],
+                    'valor'             : row['valor'],
+                    'forma-pagamento'   : row['forma_pagamento'],
+                    'conta'             : row['conta'],
+                    'hora'              : moment(row['data']).format('HH:mm:ss'),
+                    'sincronizado'      : row['sincronizado'] == 0 ? 'Não' : 'Sim'
+                });
+            }
+
+            for (var date in result) {
+
+                var momentDate = moment(date);
 
                 var liContainer = $('<li>').attr('data-role', 'list-divider').html(
-                    momentDate.format('dddd').charAt(0).toUpperCase() + momentDate.format('dddd').slice(1) + ', ' +
+                    momentDate.format('dddd').charAt(0).toUpperCase()   +
+                    momentDate.format('dddd').slice(1)                  + ', ' +
                     momentDate.format('DD')     + ' de ' +
-                    momentDate.format('MMM')    + ' de ' +
+                    momentDate.format('MMMM')   + ' de ' +
                     momentDate.format('YYYY')
-                )
-                // .append(
-                //     $('<span>').addClass('ui-li-count').text(result[i].total)
-                // )
-                ;
+                ).append(
+                    $('<span>').addClass('ui-li-count').text(result[date].length)
+                );
 
                 $(listview).append(liContainer);
 
-                var a = $('<a>')
-                    // .addClass('ui-icon-delete').attr('href', '#remover')
-                    .append($('<h2>').html(row['tipo_despesa']))
-                    .append($('<p>').append($('<strong>').html(row['valor'])))
-                    .append($('<p>').html(row['forma_pagamento']))
-                    .append($('<p>').html(
-                        (row['forma_pagamento'].toLowerCase() == 'dinheiro' || row['forma_pagamento'].toLowerCase() == 'vale alimentação')
+                for (var i = 0; i < result[date].length; i++) {
+
+                    var row = result[date][i];
+
+                    app.info(row);
+
+                    var a = $('<a>')
+                        // .addClass('ui-icon-delete').attr('href', '#remover')
+                        .append(
+                            $('<h2>').html(row['tipo-despesa'])
+                        )
+                        .append(
+                            $('<p>').append($('<strong>').html(row['valor']))
+                        )
+                        .append(
+                            $('<p>').html(row['forma-pagamento'])
+                        )
+                        .append(
+                            $('<p>').html(
+                               row['forma-pagamento'].toLowerCase() == 'dinheiro'
+                            || row['forma-pagamento'].toLowerCase() == 'vale alimentação'
                             ? ''
                             : 'Conta: ' + row.conta
-                    ))
-                    .append($('<p>').html('Sincronizado: ' + (row['sincronizado'] == 0 ? 'Não' : 'Sim')))
-                    .append($('<p>').addClass('ui-li-aside').append($('<strong>').html(
-                        moment(row.data, 'YYYY-MM-DD HH-mm-ss').format('HH:mm:ss')
-                    )))
-                ;
+                        ))
+                        .append(
+                            $('<p>').html('Sincronizado: ' + row['sincronizado'])
+                        )
+                        .append(
+                            $('<p>').addClass('ui-li-aside').append($('<strong>').html(row.hora)
+                        ))
+                    ;
 
-                $(listview).append($('<li>').append(a));
+                    $(listview).append($('<li>').append(a));
+                }
             }
 
             $(document).find('#listar .listar').listview('refresh');
