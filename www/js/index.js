@@ -16,9 +16,24 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 var app = {
 
     db: null,
+
+    debug: false,
+
+    info: function(value) {
+        if (app.debug === true) {
+            console.info(value);
+        }
+    },
+
+    log: function(value) {
+        if (app.debug === true) {
+            console.log(value);
+        }
+    },
 
     value: {
         'tipo-despesa'      : null,
@@ -97,9 +112,11 @@ var app = {
         // Evento disparado ao selecionar uma página
 
 
-        $(document).on('pagecontainerbeforeshow', function(event, ui) {
+        $(document).on('pagecontainerbeforetransition', function(event, ui) {
 
-            if (idPageActive === 'home') {
+            app.info(ui.toPage[0].id);
+
+            if (ui.toPage[0].id == 'listar') {
 
                 var result = [
                     {
@@ -156,7 +173,7 @@ var app = {
                         $('<span>').addClass('ui-li-count').text(result[i].total)
                     );
 
-                    console.info(row);
+                    app.info(row);
 
                     $(listview).append(liContainer);
 
@@ -164,7 +181,7 @@ var app = {
 
                         var data = result[i].data[j];
 
-                        console.info(data);
+                        app.info(data);
 
                         var a = $('<a>').addClass('ui-icon-delete').attr('href', '#remover')
                             .append($('<h2>').html(data['tipo-despesa']))
@@ -180,8 +197,6 @@ var app = {
                 $(document).find('#listar .listar').listview('refresh');
             }
         });
-
-
 
         $(document).on('pagechange', function() {
 
@@ -206,6 +221,7 @@ var app = {
                     'decimal'   : ',',
                     'thousands' : '.'
                 });
+
             } else if (idPageActive === 'listar') {
 
             }
