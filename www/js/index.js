@@ -239,8 +239,8 @@ var app = {
 
                 $(document).find('#despesa .valor').maskMoney({
                     'symbol'    : 'R$',
-                    'decimal'   : ',',
-                    'thousands' : '.'
+                    'decimal'   : '.',
+                    'thousands' : ''
                 });
 
             } else if (idPageActive === 'listar') {
