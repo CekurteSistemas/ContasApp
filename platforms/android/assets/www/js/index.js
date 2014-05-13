@@ -27,10 +27,6 @@ var app = {
         'valor'             : null
     },
 
-    getValue: function(key) {
-        return app.value[key];
-    },
-
     // Application Constructor
     initialize: function() {
         this.bindEvents();
@@ -41,6 +37,10 @@ var app = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+    },
+
+    getValue: function(key) {
+        return app.value[key];
     },
 
     createTable: function(tx) {
@@ -73,7 +73,7 @@ var app = {
     },
 
     successCB: function() {
-        alert("success!");
+        // alert("success!");
     },
 
     errorCB: function(error) {
@@ -95,6 +95,98 @@ var app = {
 
         // -----------------------------------------------------------------
         // Evento disparado ao selecionar uma página
+
+
+        $(document).on('pagecontainershow', function(event, ui) {
+
+            var idPageActive = $('.ui-page-active', 'body').attr('id');
+
+            console.info(ui.toPage);
+            console.info(idPageActive);
+
+            if (idPageActive === 'home') {
+
+                var result = [
+                    {
+                        'date': '2014-05-12',
+                        'total': 2,
+                        'data': [
+                            {
+                                'tipo-despesa'      : 'Comida',
+                                'valor'             : '3,52',
+                                'forma-pagamento'   : 'Dinheiro',
+                                'conta'             : '',
+                                'hora'              : '10:30:15'
+                            },
+                            {
+                                'tipo-despesa'      : 'Combustível',
+                                'valor'             : '50,05',
+                                'forma-pagamento'   : 'Cartão Débito',
+                                'conta'             : 'Caixa Economica Federal',
+                                'hora'              : '10:45:30'
+                            }
+                        ]
+                    },
+                    {
+                        'date': '2014-05-11',
+                        'total': 1,
+                        'data': [
+                            {
+                                'tipo-despesa'      : 'Comida',
+                                'valor'             : '10,80',
+                                'forma-pagamento'   : 'Cartão Débito',
+                                'conta'             : 'Banco do Brasil',
+                                'hora'              : '20:10:50'
+                            }
+                        ]
+                    }
+                ];
+
+                var listview = $(document).find('#listar ul.listar');
+
+                $(listview).empty();
+
+                for (var i = 0; i < result.length; i++) {
+
+                    var row = result[i];
+
+                    var momentDate = moment(row.date, 'YYYY-MM-DD');
+
+                    var liContainer = $('<li>').attr('data-role', 'list-divider').html(
+                        momentDate.format('dddd')   + ', ' +
+                        momentDate.format('DD')     + ' de ' +
+                        momentDate.format('MMM')    + ' de ' +
+                        momentDate.format('YYYY')
+                    ).append(
+                        $('<span>').addClass('ui-li-count').text(result[i].total)
+                    );
+
+                    console.info(row);
+
+                    $(listview).append(liContainer);
+
+                    for (var j = 0; j < result[i].total; j++) {
+
+                        var data = result[i].data[j];
+
+                        console.info(data);
+
+                        var a = $('<a>').addClass('ui-icon-delete').attr('href', '#remover')
+                            .append($('<h2>').html(data['tipo-despesa']))
+                            .append($('<p>').append($('<strong>').html(data['valor'])))
+                            .append($('<p>').html(data['forma-pagamento']))
+                            .append($('<p>').addClass('ui-li-aside').append($('<strong>').html(data['hora'])))
+                        ;
+
+                        $(listview).append($('<li>').append(a));
+                    }
+                }
+
+                $(document).find('#listar .listar').listview('refresh');
+            }
+        });
+
+
 
         $(document).on('pagechange', function() {
 
@@ -120,7 +212,6 @@ var app = {
                     'thousands' : '.'
                 });
             } else if (idPageActive === 'listar') {
-
 
             }
 
@@ -174,19 +265,6 @@ var app = {
                     transition: "slide"
                 });
             });
-
-            // navigator.notification.confirm(
-            //     'Você confirma a inclusão da despesa abaixo?'   + '\n' +
-            //     'Tipo da Despesa: ' + app.value['tipo-despesa'] + '\n' +
-            //     'Valor: R$ '        + valor,
-            //     function(opcao) {
-            //         if (opcao === 1) {
-            //             navigator.notification.alert('Despesa incluída com sucesso!', function(){}, 'Confirmação', 'Fechar');
-            //         }
-            //     },
-            //     'Incluir Despesas',
-            //     'Confirmar,Cancelar'
-            // );
         })
     },
 };
