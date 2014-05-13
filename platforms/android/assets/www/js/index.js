@@ -147,7 +147,7 @@ var app = {
 
                     var a = $('<a>')
                         .attr('href', '#').addClass(
-                            'ui-icon-' + (row['sincronizado'].toLowerCase() === 'Sim' ? 'check' : 'clock')
+                            'ui-icon-' + (row['sincronizado'].toLowerCase() === 'sim' ? 'check' : 'clock')
                         )
                         .append(
                             $('<h2>').html(row['tipo-despesa'])
