@@ -146,7 +146,9 @@ var app = {
                     app.info(row);
 
                     var a = $('<a>')
-                        // .addClass('ui-icon-delete').attr('href', '#remover')
+                        .attr('href', '#').addClass(
+                            'ui-icon-' + (row['sincronizado'].toLowerCase() === 'Sim' ? 'check' : 'clock')
+                        )
                         .append(
                             $('<h2>').html(row['tipo-despesa'])
                         )
