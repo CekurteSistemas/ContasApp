@@ -17,15 +17,6 @@
  * under the License.
  */
 
-var alert = function(message, callback) {
-    return navigator.notification.alert(
-        message,                // message
-        callback,               // alertCallback
-        'Contas Mensais',       // title
-        'OK'                    // buttonName
-    );
-};
-
 var app = {
 
     db: null,
@@ -42,6 +33,15 @@ var app = {
         if (app.debug === true) {
             console.log(value);
         }
+    },
+
+    alert: function(message, callback) {
+        return navigator.notification.alert(
+            message,                // message
+            callback,               // alertCallback
+            'Contas Mensais',       // title
+            'OK'                    // buttonName
+        );
     },
 
     value: {
@@ -238,12 +238,12 @@ var app = {
     },
 
     successCB: function() {
-        // alert("success!");
+        // app.alert("success!");
     },
 
     errorCB: function(error) {
         app.log(error);
-        alert("Error processing SQL [" + error.code + ']: ' + error.message);
+        app.alert("Error processing SQL [" + error.code + ']: ' + error.message);
     },
 
     // deviceready Event Handler
@@ -346,10 +346,10 @@ var app = {
 
             if (networkState === Connection.WIFI) {
 
-                alert('Sincronizando...');
+                app.alert('Sincronizando...');
 
             } else {
-                alert('Você não está conectado a uma Rede Wifi!');
+                app.alert('Você não está conectado a uma Rede Wifi!');
             }
 
             return false;
@@ -362,7 +362,7 @@ var app = {
 
             app.db.transaction(app.inserirConta, app.errorCB, function() {
 
-                alert('Despesa incluída com sucesso!');
+                app.alert('Despesa incluída com sucesso!');
 
                 $.mobile.changePage('index.html', {
                     transition: "slide"
