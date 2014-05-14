@@ -35,10 +35,10 @@ var app = {
         }
     },
 
-    alert: function(message, callback) {
+    alert: function(message) {
         return navigator.notification.alert(
             message,                // message
-            callback,               // alertCallback
+            function(){},           // alertCallback
             'Contas Mensais',       // title
             'OK'                    // buttonName
         );
@@ -257,7 +257,7 @@ var app = {
         // -----------------------------------------------------------------
         // Cria a base de dados
 
-        app.db = window.openDatabase('contasss12', '', 'Contas Mensais', 1000000);
+        app.db = window.openDatabase('contas', '', 'Contas Mensais', 1000000);
 
         if(app.db.version == '') {
             app.db.changeVersion('', '1.0', app.updateDatabaseToVersion('1.0'));
@@ -303,8 +303,6 @@ var app = {
                     'decimal'   : '.',
                     'thousands' : ''
                 });
-
-            } else if (idPageActive === 'listar') {
 
             }
 
