@@ -344,6 +344,34 @@ var app = {
 
             if (networkState === Connection.WIFI) {
 
+                // $.ajax({
+                //     type    : 'POST',
+                //     url     : 'http://localhost/contas/web/app_dev.php/api/conta/sincronizar',
+                //     data    : {
+                //         'cekurte_home_adminbundle_contaform': {
+                //             'tipoDespesa'   : 'Comida',
+                //             'formaPagamento': 'Dinheiro',
+                //             'conta'         : 'BB',
+                //             'valor'         : '1.23',
+                //             'data'          : {
+                //                 'date'      : {
+                //                     'day'   : 1,
+                //                     'month' : 12,
+                //                     'year'  : 2014
+                //                 },
+                //                 'time'      : {
+                //                     'hour'  : 0,
+                //                     'minute': 0
+                //                 }
+                //             }
+                //         }
+                //     },
+                //     success : function(result) {
+                //         console.info(result);
+                //     },
+                //     dataType: 'json'
+                // });
+
                 app.alert('Sincronizando...');
 
             } else {
