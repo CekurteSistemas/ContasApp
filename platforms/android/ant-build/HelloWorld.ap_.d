@@ -39,6 +39,7 @@
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/plugins/org.apache.cordova.dialogs/www/notification.js \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/plugins/org.apache.cordova.dialogs/www/android/notification.js \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/css/jquery.mobile-1.4.2.min.css \
+/home/jpcercal/PhoneGap/hello/platforms/android/assets/www/css/style.css \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/img/jquery-mobile \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/img/jquery-mobile/icons-png \
 /home/jpcercal/PhoneGap/hello/platforms/android/assets/www/img/jquery-mobile/icons-svg \

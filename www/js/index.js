@@ -17,6 +17,15 @@
  * under the License.
  */
 
+var alert = function(message, callback) {
+    return navigator.notification.alert(
+        message,                // message
+        callback,               // alertCallback
+        'Contas Mensais',       // title
+        'OK'                    // buttonName
+    );
+};
+
 var app = {
 
     db: null,
@@ -58,9 +67,49 @@ var app = {
         return app.value[key];
     },
 
-    createTable: function(tx) {
-        // tx.executeSql('DROP TABLE IF EXISTS contas');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS contas (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, tipo_despesa VARCHAR(255), forma_pagamento VARCHAR(255), conta VARCHAR(255), valor VARCHAR(255), data VARCHAR(255), sincronizado BOOL)');
+    updateDatabaseToVersion: function(toVersion) {
+
+        var updateDatabase = {
+
+            '1.0' : function(tx) {
+
+                tx.executeSql('DROP TABLE IF EXISTS contas');
+
+                // See: http://sqlite.org/autoinc.html
+                tx.executeSql('CREATE TABLE IF NOT EXISTS contas (' +
+                    'id              INTEGER        NOT NULL PRIMARY KEY AUTOINCREMENT,' +
+                    'tipo_despesa    VARCHAR(255),' +
+                    'forma_pagamento VARCHAR(255),' +
+                    'conta           VARCHAR(255),' +
+                    'valor           VARCHAR(255),' +
+                    'data            VARCHAR(255),' +
+                    'sincronizado    BOOL'          +
+                ')');
+
+                app.info('Database updated to version 1.0!');
+
+                updateDatabase['1.1'](tx);
+            },
+            '1.1': function(tx) {
+
+                tx.executeSql('DROP TABLE IF EXISTS contas');
+
+                // See: http://sqlite.org/autoinc.html
+                tx.executeSql('CREATE TABLE IF NOT EXISTS contas (' +
+                    'ROWID           INTEGER        PRIMARY KEY AUTOINCREMENT,' +
+                    'tipo_despesa    VARCHAR(255)   NOT NULL,' +
+                    'forma_pagamento VARCHAR(255)   NOT NULL,' +
+                    'conta           VARCHAR(255),'            +
+                    'valor           VARCHAR(255)   NOT NULL,' +
+                    'data            VARCHAR(255)   NOT NULL,' +
+                    'sincronizado    BOOL           NOT NULL'  +
+                ')');
+
+                app.info('Database updated to version 1.1!');
+            }
+        }
+
+        app.db.transaction(updateDatabase[toVersion], app.errorCB, app.successCB);
     },
 
     inserirConta: function(tx) {
@@ -88,12 +137,18 @@ var app = {
 
         sql += ')';
 
+        app.log(sql);
+
         tx.executeSql(sql);
     },
 
     renderGrid: function(tx) {
 
-        tx.executeSql('SELECT * FROM contas ORDER BY data DESC', [], function(tx, results) {
+        var sql = 'SELECT * FROM contas ORDER BY data DESC';
+
+        app.log(sql);
+
+        tx.executeSql(sql, [], function(tx, results) {
 
             app.log('Foram encontrados ' + results.rows.length + ' registro(s) na tabela contas.');
 
@@ -153,7 +208,7 @@ var app = {
                             $('<h2>').html(row['tipo-despesa'])
                         )
                         .append(
-                            'R$ ' + $('<p>').append($('<strong>').html(row['valor']))
+                            'R$ ' + $('<p>').append($('<strong>').html(row['valor'])).html()
                         )
                         .append(
                             $('<p>').html(row['forma-pagamento'])
@@ -187,6 +242,7 @@ var app = {
     },
 
     errorCB: function(error) {
+        app.log(error);
         alert("Error processing SQL [" + error.code + ']: ' + error.message);
     },
 
@@ -201,13 +257,18 @@ var app = {
         // -----------------------------------------------------------------
         // Cria a base de dados
 
-        app.db = window.openDatabase('contas', '1.0', 'Contas Mensais', 1000000);
+        app.db = window.openDatabase('contasss12', '', 'Contas Mensais', 1000000);
 
-        app.db.transaction(app.createTable, app.errorCB, app.successCB);
+        if(app.db.version == '') {
+            app.db.changeVersion('', '1.0', app.updateDatabaseToVersion('1.0'));
+        }
+
+        if(app.db.version == '1.0') {
+            app.db.changeVersion('1.0', '1.1', app.updateDatabaseToVersion('1.1'));
+        }
 
         // -----------------------------------------------------------------
         // Evento disparado ao selecionar uma página
-
 
         $(document).on('pagecontainerbeforetransition', function(event, ui) {
 
@@ -263,7 +324,17 @@ var app = {
         });
 
         $(document).on('click', '#despesa #avancar', function() {
-            app.value['valor'] = $('#despesa .valor').val();
+
+            var valor = $('#despesa .valor').val();
+
+            app.info(valor);
+
+            if (valor === '') {
+                $('#despesa .message').html('Preencha o valor da despesa!');
+                return false;
+            }
+
+            app.value['valor'] = valor;
         });
 
         // -----------------------------------------------------------------
