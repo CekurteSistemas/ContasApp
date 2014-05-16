@@ -17,15 +17,6 @@
  * under the License.
  */
 
-var alert = function(message, callback) {
-    return navigator.notification.alert(
-        message,                // message
-        callback,               // alertCallback
-        'Contas Mensais',       // title
-        'OK'                    // buttonName
-    );
-};
-
 var app = {
 
     db: null,
@@ -238,12 +229,21 @@ var app = {
     },
 
     successCB: function() {
-        // alert("success!");
+        app.info("Success database command!");
     },
 
     errorCB: function(error) {
+
         app.log(error);
-        alert("Error processing SQL [" + error.code + ']: ' + error.message);
+
+        var message = "Error processing SQL [" + error.code + ']: ' + error.message;
+
+        navigator.notification.alert(
+            message,                // message
+            function(){},           // alertCallback
+            'Contas Mensais',       // title
+            'OK'                    // buttonName
+        );
     },
 
     // deviceready Event Handler
@@ -257,7 +257,7 @@ var app = {
         // -----------------------------------------------------------------
         // Cria a base de dados
 
-        app.db = window.openDatabase('contasss12', '', 'Contas Mensais', 1000000);
+        app.db = window.openDatabase('contas', '', 'Contas Mensais', 1000000);
 
         if(app.db.version == '') {
             app.db.changeVersion('', '1.0', app.updateDatabaseToVersion('1.0'));
@@ -304,8 +304,6 @@ var app = {
                     'thousands' : ''
                 });
 
-            } else if (idPageActive === 'listar') {
-
             }
 
             return false;
@@ -346,10 +344,48 @@ var app = {
 
             if (networkState === Connection.WIFI) {
 
-                alert('Sincronizando...');
+                // $.ajax({
+                //     type    : 'POST',
+                //     url     : 'http://localhost/contas/web/app_dev.php/api/conta/sincronizar',
+                //     data    : {
+                //         'cekurte_home_adminbundle_contaform': {
+                //             'tipoDespesa'   : 'Comida',
+                //             'formaPagamento': 'Dinheiro',
+                //             'conta'         : 'BB',
+                //             'valor'         : '1.23',
+                //             'data'          : {
+                //                 'date'      : {
+                //                     'day'   : 1,
+                //                     'month' : 12,
+                //                     'year'  : 2014
+                //                 },
+                //                 'time'      : {
+                //                     'hour'  : 0,
+                //                     'minute': 0
+                //                 }
+                //             }
+                //         }
+                //     },
+                //     success : function(result) {
+                //         console.info(result);
+                //     },
+                //     dataType: 'json'
+                // });
+
+                navigator.notification.alert(
+                    'Sincronizando...',     // message
+                    function(){},           // alertCallback
+                    'Contas Mensais',       // title
+                    'OK'                    // buttonName
+                );
 
             } else {
-                alert('Você não está conectado a uma Rede Wifi!');
+                navigator.notification.alert(
+                    'Você não está conectado a uma Rede Wifi!',     // message
+                    function(){},           // alertCallback
+                    'Contas Mensais',       // title
+                    'OK'                    // buttonName
+                );
             }
 
             return false;
@@ -362,7 +398,12 @@ var app = {
 
             app.db.transaction(app.inserirConta, app.errorCB, function() {
 
-                alert('Despesa incluída com sucesso!');
+                navigator.notification.alert(
+                    'Despesa incluída com sucesso!',     // message
+                    function(){},           // alertCallback
+                    'Contas Mensais',       // title
+                    'OK'                    // buttonName
+                );
 
                 $.mobile.changePage('index.html', {
                     transition: "slide"

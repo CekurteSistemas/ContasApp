@@ -35,15 +35,6 @@ var app = {
         }
     },
 
-    alert: function(message) {
-        return navigator.notification.alert(
-            message,                // message
-            function(){},           // alertCallback
-            'Contas Mensais',       // title
-            'OK'                    // buttonName
-        );
-    },
-
     value: {
         'tipo-despesa'      : null,
         'forma-pagamento'   : null,
@@ -238,12 +229,21 @@ var app = {
     },
 
     successCB: function() {
-        // app.alert("success!");
+        app.info("Success database command!");
     },
 
     errorCB: function(error) {
+
         app.log(error);
-        app.alert("Error processing SQL [" + error.code + ']: ' + error.message);
+
+        var message = "Error processing SQL [" + error.code + ']: ' + error.message;
+
+        navigator.notification.alert(
+            message,                // message
+            function(){},           // alertCallback
+            'Contas Mensais',       // title
+            'OK'                    // buttonName
+        );
     },
 
     // deviceready Event Handler
@@ -372,10 +372,20 @@ var app = {
                 //     dataType: 'json'
                 // });
 
-                app.alert('Sincronizando...');
+                navigator.notification.alert(
+                    'Sincronizando...',     // message
+                    function(){},           // alertCallback
+                    'Contas Mensais',       // title
+                    'OK'                    // buttonName
+                );
 
             } else {
-                app.alert('Você não está conectado a uma Rede Wifi!');
+                navigator.notification.alert(
+                    'Você não está conectado a uma Rede Wifi!',     // message
+                    function(){},           // alertCallback
+                    'Contas Mensais',       // title
+                    'OK'                    // buttonName
+                );
             }
 
             return false;
@@ -388,7 +398,12 @@ var app = {
 
             app.db.transaction(app.inserirConta, app.errorCB, function() {
 
-                app.alert('Despesa incluída com sucesso!');
+                navigator.notification.alert(
+                    'Despesa incluída com sucesso!',     // message
+                    function(){},           // alertCallback
+                    'Contas Mensais',       // title
+                    'OK'                    // buttonName
+                );
 
                 $.mobile.changePage('index.html', {
                     transition: "slide"
